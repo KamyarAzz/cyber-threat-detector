@@ -11,7 +11,9 @@ export default function ResultLayout({isLoading, result}: Props) {
   ) : (
     <div className="flex flex-col gap-6 items-center w-full dark:text-white ">
       <ResultStatus
-        message={result.result.message}
+        message={
+          result.result.error ? result.result.error : result.result.message
+        }
         isThreat={result.result.detected}
       />
       <div className="w-full justify-start gap-4 flex flex-col">
