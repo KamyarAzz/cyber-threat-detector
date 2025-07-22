@@ -1,5 +1,5 @@
 {
-  "name": "cyber-threat-detector",
+  "name": "cyber-threat-detector-client",
   "version": "0.1.2",
   "private": true,
   "scripts": {
