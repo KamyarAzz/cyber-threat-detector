@@ -1,9 +1,9 @@
 import React from "react";
 import ResultStatus from "./ResultStatus";
 import Loader from "../Loader";
-import {AnalysisResult} from "@/lib/types";
+import {ScanApiResponse} from "@/lib/types";
 
-type Props = {result: AnalysisResult | null; isLoading: boolean};
+type Props = {result: ScanApiResponse | null; isLoading: boolean};
 
 export default function ResultLayout({isLoading, result}: Props) {
   return isLoading || result === null ? (
@@ -11,9 +11,7 @@ export default function ResultLayout({isLoading, result}: Props) {
   ) : (
     <div className="flex flex-col gap-6 items-center w-full dark:text-white ">
       <ResultStatus
-        message={
-          result.result.error ? result.result.error : result.result.message
-        }
+        message={result.error ? result.error : result.result.message}
         isThreat={result.result.detected}
       />
       <div className="w-full justify-start gap-4 flex flex-col">
@@ -23,7 +21,7 @@ export default function ResultLayout({isLoading, result}: Props) {
             <p>{result.result.url}</p>
           </div>
         )}
-        {result.result.filename && (
+        {/* {result.result.filename && (
           <div className="flex flex-col gap-0.5">
             <p className="dark:text-gray-500 text-gray-600">File name</p>
             <p>{result.result.filename}</p>
@@ -34,8 +32,8 @@ export default function ResultLayout({isLoading, result}: Props) {
             <p className="dark:text-gray-500 text-gray-600">Status</p>
             <p>{result.result.status}</p>
           </div>
-        )}
-        {result.result.size && (
+        )} */}
+        {/* {result.result.size && (
           <div className="flex flex-col gap-0.5">
             <p className="dark:text-gray-500 text-gray-600">File size</p>
             <p>{result.result.size} KB</p>
@@ -46,7 +44,7 @@ export default function ResultLayout({isLoading, result}: Props) {
             <p className="dark:text-gray-500 text-gray-600">Mime</p>
             <p>{result.result.mime}</p>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

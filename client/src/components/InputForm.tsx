@@ -4,13 +4,13 @@ import {useRef, useState} from "react";
 import axios from "axios";
 import TextInput from "./inputs/TextInput";
 import FileInput from "./inputs/FileInput";
-import {AnalysisResult} from "@/lib/types";
+import {ScanApiResponse} from "@/lib/types";
 import {toast} from "react-toastify";
 
 type Props = {
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  setResult: (result: AnalysisResult | null) => void;
+  setResult: (result: ScanApiResponse | null) => void;
 };
 
 export default function InputForm({setResult, isLoading, setIsLoading}: Props) {
