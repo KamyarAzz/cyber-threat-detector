@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+:root {
+  --light-background: #ffffff;
+  --light-foreground: #171717;
+  --dark-background: #1a1a1a;
+  --dark-foreground: #fefefe;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --color-light-background: var(--light-background);
+  --color-light-text: var(--light-foreground);
+  --color-dark-background: var(--dark-background);
+  --color-dark-text: var(--dark-foreground);
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
