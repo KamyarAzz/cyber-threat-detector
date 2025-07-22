@@ -40,7 +40,7 @@ export default function InputForm({setResult, isLoading, setIsLoading}: Props) {
     event.preventDefault();
     setResult(null);
     if (!file && !url.trim()) {
-      toast("Please enter a URL or select a file.");
+      toast.error("Please enter a URL or select a file.");
       return;
     }
     setIsLoading(true);
@@ -64,7 +64,7 @@ export default function InputForm({setResult, isLoading, setIsLoading}: Props) {
       }
     } catch (err) {
       console.error("Error submitting data:", err);
-      toast("An unknown error occurred");
+      toast.error("An unknown error occurred");
     } finally {
       setIsLoading(false);
     }
