@@ -1,5 +1,3 @@
-// types/responses.ts
-
 export interface BaseResponse {
   success: boolean;
   message?: string;
