@@ -4,24 +4,18 @@ import {useRef, useState} from "react";
 import axios from "axios";
 import TextInput from "./inputs/TextInput";
 import FileInput from "./inputs/FileInput";
+import {AnalysisResult} from "@/lib/types";
 
-type AnalysisResult = {
-  type: string;
-  result: {
-    url: string;
-    status: number;
-    contentType: string;
-    detected: boolean;
-    message: string;
-  };
+type Props = {
+  isLoading: boolean;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setResult: (result: AnalysisResult | null) => void;
 };
 
-export default function InputForm() {
+export default function InputForm({setResult, isLoading, setIsLoading}: Props) {
   const [url, setUrl] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [result, setResult] = useState<AnalysisResult | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,10 +77,14 @@ export default function InputForm() {
       <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 text-center">
         Submit a File or URL to Scan
       </h2>
-      <TextInput onChange={handleURLChange} value={url} />
-      <FileInput onChange={handleFileChange} ref={fileInputRef} />
+      <TextInput disabled={isLoading} onChange={handleURLChange} value={url} />
+      <FileInput
+        disabled={isLoading}
+        onChange={handleFileChange}
+        ref={fileInputRef}
+      />
       <button
-        disabled={url === "" && file === null}
+        disabled={(url === "" && file === null) || isLoading}
         type="submit"
         className="mt-4 disabled:cursor-default disabled:bg-gray-400 dark:disabled:bg-gray-600 cursor-pointer bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-900 transition-colors"
       >

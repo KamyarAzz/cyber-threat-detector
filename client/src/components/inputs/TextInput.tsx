@@ -3,9 +3,10 @@ import React from "react";
 type Props = {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
 };
 
-export default function TextInput({value, onChange}: Props) {
+export default function TextInput({value, onChange, disabled = false}: Props) {
   return (
     <div className="flex flex-col gap-2">
       <label
@@ -15,6 +16,7 @@ export default function TextInput({value, onChange}: Props) {
         URL
       </label>
       <input
+        disabled={disabled}
         id="url"
         type="url"
         value={value}
