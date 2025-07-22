@@ -2,7 +2,7 @@
 
 import React, {useState} from "react";
 import InputForm from "@/components/InputForm";
-import Result from "./Result";
+import ResultLayout from "./result/ResultLayout";
 import {AnalysisResult} from "@/lib/types";
 
 export default function HeroSection() {
@@ -17,7 +17,7 @@ export default function HeroSection() {
         isLoading={isLoading}
       />
       {(result || isLoading) && (
-        <Result result={result} isLoading={isLoading} />
+        <ResultLayout result={result} isLoading={isLoading} />
       )}
     </main>
   );
