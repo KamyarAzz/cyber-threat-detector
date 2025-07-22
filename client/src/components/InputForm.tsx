@@ -2,10 +2,10 @@
 
 import {useRef, useState} from "react";
 import axios from "axios";
+import {toast} from "react-toastify";
 import TextInput from "./inputs/TextInput";
 import FileInput from "./inputs/FileInput";
 import {ScanApiResponse} from "@/lib/types";
-import {toast} from "react-toastify";
 
 type Props = {
   isLoading: boolean;

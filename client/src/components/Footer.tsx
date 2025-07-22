@@ -4,7 +4,7 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="w-full text-center text-sm text-gray-500 md:py-6 pt-3 border-t border-gray-200">
+    <footer className="w-full text-center text-sm text-gray-500 md:pt-5 pt-3 border-t border-gray-200">
       © 2025 Kamyar Azizi. Licensed under the{" "}
       <a
         href="https://opensource.org/licenses/MIT"

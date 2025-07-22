@@ -1,6 +1,7 @@
 import React from "react";
 import ResultStatus from "./ResultStatus";
 import Loader from "../Loader";
+import ResultUrlStats from "./ResultUrlStats";
 import {ScanApiResponse} from "@/lib/types";
 
 type Props = {result: ScanApiResponse | null; isLoading: boolean};
@@ -15,6 +16,7 @@ export default function ResultLayout({isLoading, result}: Props) {
         isThreat={result.result.detected}
       />
       <div className="w-full justify-start gap-4 flex flex-col">
+        {result.result.stats && <ResultUrlStats stats={result.result.stats} />}
         {result.result.url && (
           <div className="flex flex-col gap-0.5">
             <p className="dark:text-gray-500 text-gray-600">URL</p>
