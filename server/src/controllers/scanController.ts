@@ -4,10 +4,16 @@ import {scanUrl} from "../services/urlScanner";
 
 export const handleScan = async (req: Request, res: Response) => {
   try {
-    const file = req.file;
+    console.log(
+      "Sending to URL:",
+      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/scan`
+    );
+
+    const files = req.files as Express.Multer.File[] | undefined;
     const url = req.body.url;
 
-    if (file) {
+    if (files && files.length > 0) {
+      const file = files[0];
       const result = await scanFile(file);
       return res.json({type: "file", result});
     }

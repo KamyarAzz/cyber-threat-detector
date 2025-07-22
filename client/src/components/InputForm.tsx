@@ -5,6 +5,7 @@ import axios from "axios";
 import TextInput from "./inputs/TextInput";
 import FileInput from "./inputs/FileInput";
 import {AnalysisResult} from "@/lib/types";
+import {toast} from "react-toastify";
 
 type Props = {
   isLoading: boolean;
@@ -15,7 +16,6 @@ type Props = {
 export default function InputForm({setResult, isLoading, setIsLoading}: Props) {
   const [url, setUrl] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,34 +36,35 @@ export default function InputForm({setResult, isLoading, setIsLoading}: Props) {
     }
   };
 
-  const handleSubmit = async () => {
-    setError(null);
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
     setResult(null);
     if (!file && !url.trim()) {
-      alert("Please enter a URL or select a file.");
+      toast("Please enter a URL or select a file.");
       return;
     }
     setIsLoading(true);
     try {
-      const formData = new FormData();
       if (file) {
+        const formData = new FormData();
         formData.append("file", file);
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/scan`,
+          formData,
+          {headers: {"Content-Type": "multipart/form-data"}}
+        );
+        setResult(response.data);
       } else if (url.trim()) {
-        formData.append("url", url.trim());
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/scan`,
+          {url: url.trim()},
+          {headers: {"Content-Type": "application/json"}}
+        );
+        setResult(response.data);
       }
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/scan`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      setResult(response.data);
     } catch (err) {
       console.error("Error submitting data:", err);
-      setError("An unknown error occurred");
+      toast("An unknown error occurred");
     } finally {
       setIsLoading(false);
     }
