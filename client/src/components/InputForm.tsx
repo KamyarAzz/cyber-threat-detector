@@ -73,7 +73,7 @@ export default function InputForm({setResult, isLoading, setIsLoading}: Props) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full max-w-md mx-auto bg-white dark:bg-[#131313] shadow-md dark:shadow-lg rounded-2xl p-6 flex flex-col gap-4 md:gap-6"
+      className="w-full max-w-md mx-auto bg-white md:min-w-[450px] dark:bg-[#131313] shadow-md dark:shadow-lg rounded-2xl p-6 flex flex-col gap-4 md:gap-6"
     >
       <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 text-center">
         Submit a File or URL to Scan

@@ -10,7 +10,7 @@ export default function HeroSection() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   return (
-    <main className="flex flex-col h-full gap-[32px] row-start-2 items-center sm:items-start">
+    <main className="flex flex-col h-full w-min mx-auto gap-[32px] row-start-2 items-center sm:items-start">
       <InputForm
         setResult={setResult}
         setIsLoading={setIsLoading}
