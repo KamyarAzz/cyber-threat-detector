@@ -1,12 +1,27 @@
 "use client";
 
 import {useRef, useState} from "react";
+import axios from "axios";
 import TextInput from "./inputs/TextInput";
 import FileInput from "./inputs/FileInput";
+
+type AnalysisResult = {
+  type: string;
+  result: {
+    url: string;
+    status: number;
+    contentType: string;
+    detected: boolean;
+    message: string;
+  };
+};
 
 export default function InputForm() {
   const [url, setUrl] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [result, setResult] = useState<AnalysisResult | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,15 +42,36 @@ export default function InputForm() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (file) {
-      console.log("Uploading file:", file);
-    } else if (url.trim()) {
-      console.log("Submitting URL:", url);
-    } else {
+  const handleSubmit = async () => {
+    setError(null);
+    setResult(null);
+    if (!file && !url.trim()) {
       alert("Please enter a URL or select a file.");
+      return;
+    }
+    setIsLoading(true);
+    try {
+      const formData = new FormData();
+      if (file) {
+        formData.append("file", file);
+      } else if (url.trim()) {
+        formData.append("url", url.trim());
+      }
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/scan`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setResult(response.data);
+    } catch (err) {
+      console.error("Error submitting data:", err);
+      setError("An unknown error occurred");
+    } finally {
+      setIsLoading(false);
     }
   };
 
