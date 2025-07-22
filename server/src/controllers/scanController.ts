@@ -1,25 +1,22 @@
 import {Request, Response} from "express";
-import {scanFile} from "../services/fileScanner";
-import {scanUrl} from "../services/urlScanner";
+import {
+  scanFileWithVirusTotal,
+  scanUrlWithVirusTotal,
+} from "../services/virusTotal";
 
 export const handleScan = async (req: Request, res: Response) => {
   try {
-    console.log(
-      "Sending to URL:",
-      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/scan`
-    );
-
     const files = req.files as Express.Multer.File[] | undefined;
     const url = req.body.url;
 
     if (files && files.length > 0) {
       const file = files[0];
-      const result = await scanFile(file);
+      const result = await scanFileWithVirusTotal(file);
       return res.json({type: "file", result});
     }
 
     if (url) {
-      const result = await scanUrl(url);
+      const result = await scanUrlWithVirusTotal(url);
       return res.json({type: "url", result});
     }
 
