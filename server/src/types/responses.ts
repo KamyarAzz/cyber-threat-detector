@@ -3,22 +3,15 @@ export interface BaseResponse {
   message?: string;
 }
 
-export interface FileScanResult {
-  filename: string;
-  size?: number;
-  mime?: string;
-  stats?: UrlStats;
-  detected: boolean;
-  message: string;
-  results?: Record<string, EngineResult>;
-}
-
 export type EngineCategory =
   | "malicious"
   | "suspicious"
   | "undetected"
   | "harmless"
-  | "timeout";
+  | "timeout"
+  | "confirmed-timeout"
+  | "failure"
+  | "type-unsupported";
 
 export interface EngineResult {
   method: string;
@@ -27,32 +20,34 @@ export interface EngineResult {
   result: string;
 }
 
-export interface UrlStats {
-  harmless: number;
-  malicious: number;
-  suspicious: number;
-  undetected: number;
-  timeout: number;
-}
+export type EngineResultsStats = {
+  [key in EngineCategory]: number;
+};
 
-export interface UrlScanResult {
-  url: string;
-  status?: number;
-  contentType?: string;
+type ScanBaseResult = {
   detected: boolean;
   message: string;
-  stats?: UrlStats;
+  stats?: EngineResultsStats;
   results?: Record<string, EngineResult>;
-}
+};
 
-export interface FileScanResponse extends BaseResponse {
-  type: "file";
-  result: FileScanResult;
-}
+type UrlScanPayload = {
+  url: string;
+  contentType?: string;
+  status?: number;
+};
 
-export interface UrlScanResponse extends BaseResponse {
-  type: "url";
-  result: UrlScanResult;
+type FileScanPayload = {
+  filename: string;
+  mime: string;
+  size: number;
+};
+
+export type ScanResult = ScanBaseResult & (UrlScanPayload | FileScanPayload);
+
+export interface ScanResponse extends BaseResponse {
+  type: "url" | "file";
+  result: ScanResult;
 }
 
 export interface ErrorResponse extends BaseResponse {
@@ -60,7 +55,4 @@ export interface ErrorResponse extends BaseResponse {
   error: string;
 }
 
-export type ScanApiResponse =
-  | FileScanResponse
-  | UrlScanResponse
-  | ErrorResponse;
+export type ScanApiResponse = ScanResponse | ErrorResponse;

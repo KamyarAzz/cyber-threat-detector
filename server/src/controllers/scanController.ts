@@ -8,7 +8,8 @@ export const handleScan = async (
   res: Response<ScanApiResponse>
 ) => {
   try {
-    const file = req.file;
+    const files = req.files as Express.Multer.File[] | undefined;
+    const file = files && files.length > 0 ? files[0] : undefined;
     const url = req.body.url;
 
     if (file) {

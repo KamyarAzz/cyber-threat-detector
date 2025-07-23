@@ -3,10 +3,10 @@
 import React, {useState} from "react";
 import InputForm from "@/components/InputForm";
 import ResultLayout from "./result/ResultLayout";
-import {AnalysisResult} from "@/lib/types";
+import {ScanApiResponse} from "@/lib/types";
 
 export default function HeroSection() {
-  const [result, setResult] = useState<AnalysisResult | null>(null);
+  const [result, setResult] = useState<ScanApiResponse | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   return (

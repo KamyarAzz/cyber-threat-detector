@@ -50,8 +50,7 @@ export default function InputForm({setResult, isLoading, setIsLoading}: Props) {
         formData.append("file", file);
         const response = await axios.post(
           `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/scan`,
-          formData,
-          {headers: {"Content-Type": "multipart/form-data"}}
+          formData
         );
         setResult(response.data);
       } else if (url.trim()) {

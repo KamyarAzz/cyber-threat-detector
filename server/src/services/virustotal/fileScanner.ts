@@ -1,7 +1,11 @@
 import axios from "axios";
 import FormData from "form-data";
 import {sleep} from "../../utils/sleep";
-import {FileScanResult, EngineResult, UrlStats} from "../../types/responses";
+import {
+  ScanResult,
+  EngineResult,
+  EngineResultsStats,
+} from "../../types/responses";
 
 const apiKey = process.env.VIRUSTOTAL_API_KEY!;
 const baseUrl = process.env.VIRUSTOTAL_URL!;
@@ -38,13 +42,12 @@ async function pollAnalysis(id: string, maxTries = 10, delay = 3000) {
 
 export async function scanFileWithVirusTotal(
   file: Express.Multer.File
-): Promise<FileScanResult> {
+): Promise<ScanResult> {
   const analysisId = await submitFile(file);
   const result = await pollAnalysis(analysisId);
 
-  const stats: UrlStats = result.stats;
+  const stats: EngineResultsStats = result.stats;
 
-  // Determine if any engine found malicious or suspicious
   const detected = stats.malicious > 0 || stats.suspicious > 0;
 
   return {

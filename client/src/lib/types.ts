@@ -3,7 +3,10 @@ export type EngineCategory =
   | "suspicious"
   | "undetected"
   | "harmless"
-  | "timeout";
+  | "timeout"
+  | "confirmed-timeout"
+  | "failure"
+  | "type-unsupported";
 
 export interface EngineResult {
   method: string;
@@ -12,19 +15,15 @@ export interface EngineResult {
   result: string;
 }
 
-export interface UrlStats {
-  harmless: number;
-  malicious: number;
-  suspicious: number;
-  undetected: number;
-  timeout: number;
-}
+export type EngineResultsStats = {
+  [key in EngineCategory]: number;
+};
 
 export interface UrlScanResult {
   url: string;
   detected: boolean;
   message: string;
-  stats?: UrlStats;
+  stats?: EngineResultsStats;
   results?: Record<string, EngineResult>;
 }
 

@@ -1,12 +1,10 @@
 // urlScanner.ts
 import {submitUrl} from "./submit";
 import {pollAnalysis} from "./poll";
-import {UrlScanResult} from "../../types/responses";
+import {ScanResult} from "../../types/responses";
 import {summarizeVirusTotalResults} from "./summary";
 
-export async function scanUrlWithVirusTotal(
-  url: string
-): Promise<UrlScanResult> {
+export async function scanUrlWithVirusTotal(url: string): Promise<ScanResult> {
   const analysisId = await submitUrl(url);
   const result = await pollAnalysis(analysisId);
 

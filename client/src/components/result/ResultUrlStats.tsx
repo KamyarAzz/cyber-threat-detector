@@ -1,34 +1,33 @@
 // components/ScanStatsChart.tsx
 "use client";
 
-import {UrlStats} from "@/lib/types";
+import {EngineCategory, EngineResultsStats} from "@/lib/types";
 import React from "react";
 
-type EngineCategory =
-  | "malicious"
-  | "suspicious"
-  | "undetected"
-  | "harmless"
-  | "timeout";
-
 type Props = {
-  stats: UrlStats;
+  stats: EngineResultsStats;
 };
 
-const COLORS: Record<EngineCategory, string> = {
+const colors: Record<EngineCategory, string> = {
   malicious: "bg-red-500",
   suspicious: "bg-yellow-400",
   undetected: "bg-gray-400",
   harmless: "bg-green-500",
   timeout: "bg-blue-400",
+  "confirmed-timeout": "bg-blue-500",
+  failure: "bg-red-700",
+  "type-unsupported": "bg-purple-500",
 };
 
-const LABELS: Record<EngineCategory, string> = {
+const Lables: Record<EngineCategory, string> = {
   malicious: "Malicious",
   suspicious: "Suspicious",
   undetected: "Undetected",
   harmless: "Harmless",
   timeout: "Timeout",
+  "confirmed-timeout": "Confirmed Timeout",
+  failure: "Failure",
+  "type-unsupported": "Type Unsupported",
 };
 
 export default function ResultUrlStats({stats}: Props) {
@@ -45,9 +44,9 @@ export default function ResultUrlStats({stats}: Props) {
           return (
             <div
               key={key}
-              className={`${COLORS[key]} h-full`}
+              className={`${colors[key]} h-full`}
               style={{width: `${percentage}%`}}
-              title={`${LABELS[key]}: ${stats[key]} (${percentage.toFixed(
+              title={`${Lables[key]}: ${stats[key]} (${percentage.toFixed(
                 1
               )}%)`}
             />
@@ -61,9 +60,9 @@ export default function ResultUrlStats({stats}: Props) {
           return (
             <div key={key} className="flex items-center gap-2">
               <span
-                className={`inline-block w-3 h-3 min-w-3 min-h-3 rounded-sm ${COLORS[key]}`}
+                className={`inline-block w-3 h-3 min-w-3 min-h-3 rounded-sm ${colors[key]}`}
               />
-              <span>{LABELS[key]}:</span>
+              <span>{Lables[key]}:</span>
               <span className="ml-auto font-medium">
                 {percentage.toFixed(1)}%
               </span>
