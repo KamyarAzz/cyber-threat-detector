@@ -5,10 +5,12 @@ export interface BaseResponse {
 
 export interface FileScanResult {
   filename: string;
-  size: number;
-  mime: string;
+  size?: number;
+  mime?: string;
+  stats?: UrlStats;
   detected: boolean;
   message: string;
+  results?: Record<string, EngineResult>;
 }
 
 export type EngineCategory =
